@@ -20,7 +20,7 @@ jobs:
           command: |
             echo "$pem" > key.pem
             chmod 400 key.pem
-            ssh -i key.pem ubuntu@$ip "sudo -i && && Ngit pull origin main && sudo systemctl restart nginx"
+            ssh -i key.pem ubuntu@$ip "sudo -i && docker compose -f /home/ubuntu/CircleCI-Test/docker-compose.yml up --build -d"
           environment:
             IP: $IP
             PEM: $PEM
