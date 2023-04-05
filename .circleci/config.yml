@@ -1,0 +1,42 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: golang:1.16.5
+    working_directory: /go/src/github.com/SuperJourney/CircleCI-Test
+    steps:
+      - checkout
+      - run: go build
+      - run: go test -v
+  deploy:
+    docker:
+      - image: golang:1.16.5
+    working_directory: /go/src/github.com/SuperJourney/CircleCI-Test
+    steps:
+      - checkout
+      - run: GOOS=linux GOARCH=amd64 go build -o app
+      - deploy:
+          name: Deploy to production
+          command: |
+            echo "$PEM" > key.pem
+            chmod 400 key.pem
+            ssh -i key.pem username@$IP "sudo -i && && Ngit pull origin main && sudo systemctl restart nginx"
+          environment:
+            IP: $IP
+            PEM: $PEM
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: main
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
+          context: tyun
