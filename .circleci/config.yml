@@ -12,13 +12,13 @@ jobs:
     docker:
       - image: golang:1.16.5
     working_directory: /go/src/github.com/SuperJourney/CircleCI-Test
-    steps:
+pem    steps:
       - checkout
       - run: GOOS=linux GOARCH=amd64 go build -o app
       - deploy:
           name: Deploy to production
           command: |
-            echo "$pem" > key.pem
+            echo "$pem" | sed 's/ /\n/g' > key.pem
             chmod 400 key.pem
             ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@$ip "sudo -i && docker compose -f /home/ubuntu/CircleCI-Test/docker-compose.yml up --build -d"
           environment:
