@@ -18,10 +18,10 @@ pem    steps:
       - deploy:
           name: Deploy to production
           command: |
-            echo "$pem" | sed 's/ /\n/g' > key.pem
+            echo "$pem" > key.pem
             chmod 400 key.pem
             cat key.pem
-            ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@$ip "sudo -i && docker compose -f /home/ubuntu/CircleCI-Test/docker-compose.yml up --build -d"
+            ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@$ip "sudo -E docker compose -f /home/ubuntu/CircleCI-Test/docker-compose.yml up --build -d"
           environment:
             IP: $IP
             PEM: $PEM
