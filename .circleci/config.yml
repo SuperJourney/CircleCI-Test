@@ -20,7 +20,7 @@ jobs:
           command: |
             echo "$PEM" > key.pem
             chmod 400 key.pem
-            ssh -i key.pem username@$IP "sudo -i && && Ngit pull origin main && sudo systemctl restart nginx"
+            ssh -i key.pem ubuntu@$IP "sudo -i && && Ngit pull origin main && sudo systemctl restart nginx"
           environment:
             IP: $IP
             PEM: $PEM
