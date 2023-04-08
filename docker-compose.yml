@@ -8,7 +8,7 @@ services:
     volumes:
       - ../:/workspaces:cached
     privileged: true
-    # network_mode: service:db
+    network_mode: host
     command: sleep infinity
     ports:
       - "8080:8080"
