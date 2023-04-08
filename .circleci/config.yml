@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Deploy to production
           command: |
-            ssh -o StrictHostKeyChecking=no  root@182.254.176.160 "cd /root/superjourney/CircleCI-Test/ && git pull &&  docker compose  up --build"
+            ssh -o StrictHostKeyChecking=no  root@182.254.176.160 "cd /root/superjourney/CircleCI-Test/ && git pull &&  docker compose  up --build -d "
     environment:
       PEM: $PEM
 
