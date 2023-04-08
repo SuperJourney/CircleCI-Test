@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Deploy to production
           command: |
-            ssh -o StrictHostKeyChecking=no  ubuntu@182.254.176.160 "sudo -E  docker compose -f /home/ubuntu/CircleCI-Test/docker-compose.yml up --build"
+            ssh -o StrictHostKeyChecking=no  root@182.254.176.160 "sudo -E  docker compose -f /root/superjourney/CircleCI-Test/docker-compose.yml up --build"
     environment:
       PEM: $PEM
 
